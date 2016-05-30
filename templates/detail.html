@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- templatemo 413 flip turn -->
+<!-- 
+Flip Turn Template 
+http://www.templatemo.com/preview/templatemo_413_flip_turn
+-->
+
+{% extends "index3.html" %}
+
+{% block content %}
+  <div class="col-sm-9">
+
+      <div class="row">
+      
+          <img class="resize" src="/media/{{ article.hero_image }}" />
+          <br><br>
+          <div class="col-sm-8">
+          <h2><a href="#">{{article.title|truncatechars:250}}</a></h2>
+      <h5><span class="glyphicon glyphicon-time"></span> Post by {{article.author}}, {{article.publication_date}}.</h5>
+      <hr>
+          <p>{{article.summary}}</p>
+          </div>
+          <div class="col-sm-3">
+          <img class="portrait" src="/media/{{ article.extra_image }}" />
+          </div>
+     </div>
+      <hr>
+ 
+      <h2>What to read next?</h2>
+     <hr>
+    <div class="flexslider">
+    <ul class="slides">
+        {%for a in articles%}
+        <li>
+        <div class="slideme">
+           <img src="/media/{{ a.extra_image }}" />
+           <h4><a href="{%url 'detail' a.id %}">{{a.title|truncatechars:30}}</a></h4>
+        </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+
+ 
+    </div>
+{% endblock %}

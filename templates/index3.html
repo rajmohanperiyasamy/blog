@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>This is my blog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href="/static/css/slider.css" rel="stylesheet"> 
+  
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button data-target="#myNavbar" data-toggle="collapse" class="navbar-toggle" type="button">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a href="#" class="navbar-brand">Logo</a>
+    </div>
+    <div id="myNavbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="http://snapturn.pythonanywhere.com/about/">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/admin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    {% block sidenavigation %}
+    <div class="col-sm-3 sidenav">
+      <h4>Raj's Blog</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="#section1">Python</a></li>
+        <li><a href="#section2">Django</a></li>
+        <li><a href="#section3">Mysql</a></li>
+        <li><a href="#section3">Bootstrap</a></li>
+      </ul><br>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Blog..">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    <div class="col-sm-9">
+
+      <div class="test">
+          <div class="span4">
+          <img class="resize" src="media/{{ random_article.hero_image }}" />
+          <br><br>
+          {% if random_article %}
+          <p>{{random_article.summary|truncatechars:600}}</p>
+          {% endif %}
+          </div>
+      </div>
+
+      <h4><small>RECENT POSTS</small></h4>
+      {% if articles %}
+     {%for a in articles%}
+      <hr>
+      <h2><a href="{%url 'detail' a.id %}">{{a.title|truncatechars:250}}</a></h2>
+      <h5><span class="glyphicon glyphicon-time"></span> Post by {{a.author}}, {{a.publication_date}}.</h5>
+      <h5><span class="label label-success">{{a.category}}</span> <span class="label label-primary">Ipsum</span></h5><br>
+      <p>{{a.summary|truncatechars:200}}</p>
+      {% endfor %}
+      <h2>What to read next?</h2>
+     <hr>
+    <div class="flexslider">
+    <ul class="slides">
+      {%for a in articles%}
+        <li>
+        <div class="slideme">
+           <img src="/media/{{ a.extra_image }}" />
+           <h4><a href="{%url 'detail' a.id %}">{{a.title|truncatechars:30}}</a></h4>
+        </div>
+        </li>
+        {% endfor %}
+        
+        {% else %}
+        <p>Sorry there is no articles</p>
+        {% endif %}
+    </ul>
+</div>
+
+
+
+    </div>
+    {% endblock %}
+  </div>
+</div>
+{% block footer %}
+<nav class="navbar navbar-inverse">
+</nav>
+{% endblock %}
+</body>
+</html>
+
+<script type="text/javascript" src="http://project.dimpost.com/flexslider-carousel/jquery.js"></script>
+<script type="text/javascript" src="http://project.dimpost.com/flexslider-carousel/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(window).load(function() {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            itemWidth: 210,
+            itemMargin: 0,
+            minItems: 1,
+            maxItems: 4
+        });
+    });
+});
+</script>
